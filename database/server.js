@@ -5,6 +5,8 @@ const {
   ValidationError,
 } = require("express-json-validator-middleware");
 require("dotenv").config();
+const cors = require('cors')
+
 const prisma = new PrismaClient();
 const { validate } = new Validator();
 const port = process.env.port;
@@ -45,7 +47,10 @@ const studentSchema = {
     },
   },
 };
+// application level middlewares
 app.use(Express.json());
+app.use(cors());
+
 // Routes
 // get datas
 app.get("/students", async (req, res) => {
