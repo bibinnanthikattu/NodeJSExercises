@@ -5,7 +5,8 @@ const {
   ValidationError,
 } = require("express-json-validator-middleware");
 require("dotenv").config();
-const cors = require('cors')
+const cors = require('cors');
+const multer = require('multer');
 
 const prisma = new PrismaClient();
 const { validate } = new Validator();
@@ -47,7 +48,19 @@ const studentSchema = {
     },
   },
 };
+
+const storage = multer.diskStorage({   
+  destination:(req, file, cb)=> { 
+    cb(null, './uploads');    
+ },  
+  filename: function (req, file, cb) { 
+     cb(null , file.originalname);   
+  }
+});
+const upload = multer({ storage: storage });
+
 // application level middlewares
+
 app.use(Express.json());
 app.use(cors());
 
@@ -108,6 +121,11 @@ app.delete("/student/:id(\\d+)", async (req, res) => {
     console.log('deleted succefully');
 });
   
+// Upload files
+app.post("/student/:id(\\d+)/photo",upload.single("photo") ,async (req, res) => {
+  console.log(req.file);
+  res.send("file uploaded successfully")
+});
 
 // error midddleware
 app.use(validationErrorMiddleware);
