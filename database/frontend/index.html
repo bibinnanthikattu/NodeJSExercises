@@ -1,21 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Student</title>
-</head>
-<body>
-    <button onclick="fetchData()">Get data</button>
-    <script>
-        const btn = document.querySelector('button');
+  </head>
+  <body>
+    <!-- <button onclick="fetchData()">Get data</button> -->
+    <form
+      action="http://localhost:5000/2/photo"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <input type="file" name="photo" id="" />
+      <input type="button" value="submit" />
+    </form>
 
-        const fetchData =async()=>{
-            const response = await fetch('http://localhost:5000/students');
-            const data=await response.json();
-            console.log(data);
-        };
+    <script>
+      const btn = document.querySelector("button");
+
+      const fetchData = async () => {
+        const response = await fetch("http://localhost:5000/students");
+        const data = await response.json();
+        console.log(data);
+      };
     </script>
-</body>
+  </body>
 </html>
