@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv/config");
 const app_1 = __importDefault(require("./app"));
 const config_1 = __importDefault(require("./config"));
-const port = config_1.default.port;
+const port = config_1.default.PORT;
 app_1.default.listen(5000, () => {
     console.log(`server is running on port: ${port} `);
 });

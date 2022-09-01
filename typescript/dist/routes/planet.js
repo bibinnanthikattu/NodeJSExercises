@@ -30,6 +30,7 @@ const planetValidationType_1 = require("../middleware/lib/planetValidationType")
 const prisma = new client_1.PrismaClient();
 const multer_1 = require("../middleware/multer");
 const upload = (0, multer_1.initMulterMiddleware)();
+const passport_1 = require("../middleware/passport");
 const route = (0, express_1.Router)();
 // get route api
 route.get("/", async (req, res) => {
@@ -51,7 +52,7 @@ route.get("/:id(\\d+)", async (req, res, next) => {
     res.json(response);
 });
 // post route api
-route.post("", (0, lib_1.validate)({ body: planetValidationType_1.planetSchema }), async (req, res) => {
+route.post("/", passport_1.checkAuthorization, (0, lib_1.validate)({ body: planetValidationType_1.planetSchema }), async (req, res) => {
     const planet = req.body;
     const response = await prisma.planet.create({
         data: planet,
@@ -60,7 +61,7 @@ route.post("", (0, lib_1.validate)({ body: planetValidationType_1.planetSchema }
     console.log(response);
 });
 // update route api
-route.put("/:id(\\d+)", (0, lib_1.validate)({ body: planetValidationType_1.planetSchema }), async (req, res, next) => {
+route.put("/:id(\\d+)", passport_1.checkAuthorization, (0, lib_1.validate)({ body: planetValidationType_1.planetSchema }), async (req, res, next) => {
     const planetId = Number(req.params.id);
     const planetData = req.body;
     try {
@@ -76,7 +77,7 @@ route.put("/:id(\\d+)", (0, lib_1.validate)({ body: planetValidationType_1.plane
     }
 });
 // Delete route api
-route.delete("/:id(\\d+)", async (req, res, next) => {
+route.delete("/:id(\\d+)", passport_1.checkAuthorization, async (req, res, next) => {
     const planetId = Number(req.params.id);
     try {
         const resposne = await prisma.planet.delete({
@@ -90,7 +91,7 @@ route.delete("/:id(\\d+)", async (req, res, next) => {
     }
 });
 // File upload route
-route.post("/:id(\\d+)/photo", upload.single("photo"), async (req, res, next) => {
+route.post("/:id(\\d+)/photo", passport_1.checkAuthorization, upload.single("photo"), async (req, res, next) => {
     if (!req.file) {
         res.status(422);
         return next("No file uploaded!");
