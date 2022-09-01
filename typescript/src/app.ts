@@ -12,7 +12,7 @@ import authRoutes from './routes/auth'
 
 // middleware
 // authentification middleware
-app.use(initSessionMiddleware());
+app.use(initSessionMiddleware(app.get("env")));
 app.use(passport.initialize());
 app.use(passport.session());
 
