@@ -3,7 +3,9 @@ import { Validator, ValidationError } from 'express-json-validator-middleware';
 import { IndexKind } from 'typescript';
 import { ErrorRequestHandler } from 'express';
 
-const validator = new Validator({});
+const validator = new Validator({
+    coerceTypes:true
+});
 addFormats(validator.ajv, ["date-time"])
     .addKeyword("kind")
     .addKeyword("modifier");

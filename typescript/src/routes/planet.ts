@@ -5,7 +5,8 @@ import { validate } from "../middleware/lib";
 import { planetData, planetSchema } from "../middleware/lib/planetValidationType";
 const prisma = new PrismaClient();
 import { initMulterMiddleware } from "../middleware/multer";
-const upload = initMulterMiddleware()
+const upload = initMulterMiddleware();
+import { checkAuthorization } from '../middleware/passport';
 
 const route = Router();
 // get route api
@@ -30,7 +31,7 @@ route.get("/:id(\\d+)", async (req, res, next) => {
 });
 
 // post route api
-route.post("",validate({body:planetSchema}), async (req, res) => {
+route.post("/",checkAuthorization, validate({body:planetSchema}), async (req, res) => {
   const planet: planetData = req.body;
   const response = await prisma.planet.create({
     data: planet,
@@ -40,7 +41,7 @@ route.post("",validate({body:planetSchema}), async (req, res) => {
 });
 
 // update route api
-route.put("/:id(\\d+)", validate({ body: planetSchema }), async (req, res, next) => {
+route.put("/:id(\\d+)",checkAuthorization, validate({ body: planetSchema }), async (req, res, next) => {
     const planetId = Number(req.params.id);
     const planetData: planetData = req.body;
     try {
@@ -56,7 +57,7 @@ route.put("/:id(\\d+)", validate({ body: planetSchema }), async (req, res, next)
 });
 
 // Delete route api
-route.delete("/:id(\\d+)", async (req, res, next) => {
+route.delete("/:id(\\d+)",checkAuthorization, async (req, res, next) => {
     const planetId = Number(req.params.id);
     try {
         const resposne = await prisma.planet.delete({
@@ -69,7 +70,7 @@ route.delete("/:id(\\d+)", async (req, res, next) => {
     }
 });
 // File upload route
-route.post("/:id(\\d+)/photo", upload.single("photo"), async (req, res, next) => {
+route.post("/:id(\\d+)/photo",checkAuthorization, upload.single("photo"), async (req, res, next) => {
    
     if (!req.file) {
         res.status(422);
