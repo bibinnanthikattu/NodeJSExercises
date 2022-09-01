@@ -20,7 +20,25 @@ const storage = multer_1.default.diskStorage({
         return cb(null, (0, exports.generateFileName)(file.mimetype));
     }
 });
-exports.multerOptions = {};
+// to restrict file size
+const MAX_FILE_SIZE = 6 * 1024 * 1024;
+// to restrict file types
+// define file type array
+const FILE_TYPES = ["image/png", "image/jpeg"];
+const fileFilter = (req, file, cb) => {
+    if (FILE_TYPES.includes(file.mimetype)) {
+        cb(null, true);
+    }
+    else {
+        cb(new Error("Error: file uploads must be in 'png' or 'JPEG'"));
+    }
+};
+exports.multerOptions = {
+    fileFilter,
+    limits: {
+        filSize: MAX_FILE_SIZE
+    }
+};
 const initMulterMiddleware = () => {
     return (0, multer_1.default)({ storage, ...exports.multerOptions });
 };
