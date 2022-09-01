@@ -25,8 +25,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importStar(require("express"));
 const client_1 = require("@prisma/client");
-const lib_1 = require("../lib");
-const planetValidationType_1 = require("../lib/planetValidationType");
+const lib_1 = require("../middleware/lib");
+const planetValidationType_1 = require("../middleware/lib/planetValidationType");
 const prisma = new client_1.PrismaClient();
 const multer_1 = require("../middleware/multer");
 const upload = (0, multer_1.initMulterMiddleware)();

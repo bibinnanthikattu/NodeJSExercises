@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
-const index_1 = require("./lib/index");
+const index_1 = require("./middleware/lib/index");
 const planet_1 = __importDefault(require("./routes/planet"));
 // middleware
 app.use(express_1.default.json());

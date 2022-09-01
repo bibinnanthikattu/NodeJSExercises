@@ -1,8 +1,8 @@
 import express, { Router } from 'express';
 
 import { PrismaClient } from "@prisma/client";
-import { validate } from "../lib";
-import { planetData, planetSchema } from "../lib/planetValidationType";
+import { validate } from "../middleware/lib";
+import { planetData, planetSchema } from "../middleware/lib/planetValidationType";
 const prisma = new PrismaClient();
 import { initMulterMiddleware } from "../middleware/multer";
 const upload = initMulterMiddleware()

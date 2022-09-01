@@ -4,7 +4,7 @@ import express from "express";
 import cors from 'cors'
 import { appendFile } from "fs";
 const app = express();
-import { validationErrorMiddleware } from './lib/index';
+import { validationErrorMiddleware } from './middleware/lib/index';
 import planetRoutes from './routes/planet'
 
 // middleware
